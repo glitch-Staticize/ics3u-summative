@@ -31,5 +31,6 @@ export const useStore = defineStore('store', () => {
     addToCart,
     removeFromCart,
     setRegistrationData,
+    user
   };
 });

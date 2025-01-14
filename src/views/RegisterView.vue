@@ -1,4 +1,36 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../firebase";
+import { useRouter } from 'vue-router';
+import { useStore } from "../store"
+const firstName = ref('');
+const lastName = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const router = useRouter();
+const store = useStore();
+async function registerByEmail() {
+  
+  try {
+    const user = (await createUserWithEmailAndPassword(auth, email.value, password.value)).user;
+    await updateProfile(user, { displayName: `${firstName.value} ${lastName.value}` });
+    store.user = user;
+    router.push("/movies");
+  } catch (error) {
+    alert("There was an error creating a user with email!");
+  }
+}
+async function registerByGoogle() {
+  try {
+    const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
+    store.user = user;
+    router.push("/movies");
+  } catch (error) {
+    alert("There was an error creating a user with Google!");
+  }
+}</script>
 
 <template>
   <div class="hero">
@@ -9,15 +41,16 @@
       </div>
       <div class="form-container">
         <h2>Create an Account</h2>
-        <form>
-          <input type="first-name" placeholder="First Name" class="input-field" required>
-          <input type="surname" placeholder="Surname" class="input-field" required>
-          <input type="email" placeholder="Email" class="input-field" required>
-          <input type="password" placeholder="Password" class="input-field" required>
-          <input type="confirm-password" placeholder="Confirm Password" class="input-field" required>
+        <form @submit.prevent="registerByEmail()">
+          <input v-model="firstName" type="text" placeholder="First Name" class="input-field" required>
+          <input v-model="lastName" type="text" placeholder="Last Name" class="input-field" required>
+          <input v-model="email" type="text" placeholder="Email" class="input-field" required>
+          <input v-model="password" type="password" placeholder="Password" class="input-field" required>
+          <input v-model="confirmPassword" type="password" placeholder="Confirm Password" class="input-field" required>
           <button type="submit" class="button register">Register</button>
         </form>
       </div>
+      <button @click="registerByGoogle()" class="button register">Register by Google</button>
     </div>
   </div>
 </template>

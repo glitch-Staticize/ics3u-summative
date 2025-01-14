@@ -1,16 +1,19 @@
 <script setup>
-import { RouterLink, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import Header from '../components/Header.vue';
+import { useStore } from '../store';
+import Header from '../components/Header.vue'
 
-const router = useRouter();
+const store = useStore('');
+const email = ref('');
 const password = ref('');
+const router = useRouter('');
 
 const handleLogin = () => {
-  if (password.value === "sinister") {
+  if (email.value === store.email && password.value === store.password) {
     router.push("/movies");
   } else {
-    alert("Invalid Password");
+    alert('Login incorrect :(');
   }
 };
 </script>
@@ -20,14 +23,14 @@ const handleLogin = () => {
   <div class="hero">
     <div class="overlay">
       <div class="navbar">
-      </div>
-      <div class="form-container">
-        <h2>Login to Your Account</h2>
-        <form @submit.prevent="handleLogin">
-          <input type="email" placeholder="Email" class="input-field" required />
-          <input v-model:="password" type="password" placeholder="Password" class="input-field" required />
-          <button type="submit" class="button login">Login</button>
-        </form>
+        <div class="form-container">
+          <h2>Login to Your Account</h2>
+          <form @submit.prevent="handleLogin">
+            <input v-model="email" type="email" placeholder="Email" class="input-field" required />
+            <input v-model="password" type="password" placeholder="Password" class="input-field" required />
+            <button type="submit" class="button login">Login</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
