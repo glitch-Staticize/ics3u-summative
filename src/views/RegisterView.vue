@@ -11,8 +11,8 @@ const password = ref('');
 const confirmPassword = ref('');
 const router = useRouter();
 const store = useStore();
-async function registerByEmail() {
-  
+
+async function registerByEmail() {  
   try {
     const user = (await createUserWithEmailAndPassword(auth, email.value, password.value)).user;
     await updateProfile(user, { displayName: `${firstName.value} ${lastName.value}` });
