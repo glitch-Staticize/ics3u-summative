@@ -7,11 +7,11 @@ const router = useRouter();
 </script>
 
 <template>
-    <header class="header">
-      <h1>{{ `Hello ${store.email}!` }}</h1>
-      <button @click="router.push(`/cart`)" class="logout-button">Cart</button>
-      <button @click="router.push(`/`)" class="logout-button">Logout</button>
-    </header>
+  <header class="header">
+    <h1>{{ `Hello ${store.email}!` }}</h1>
+    <button @click="router.push(`/cart`)" class="logout-button">Cart</button>
+    <button @click="router.push(`/`)" class="logout-button">Logout</button>
+  </header>
 </template>
 
 <style scoped>

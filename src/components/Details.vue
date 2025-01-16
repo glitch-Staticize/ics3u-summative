@@ -29,15 +29,15 @@ const response = await axios.get(`https://api.themoviedb.org/3/movie/${route.par
 
 <style scoped>
 .movie-detail {
-  margin-top:0px;
+  margin-top: 0px;
   padding: 20px;
   color: white;
   background-color: black;
   font-family: Arial, sans-serif;
 }
 
-.movie-detail h1{
-  margin-top:60px;
+.movie-detail h1 {
+  margin-top: 60px;
 }
 
 .movie-title {
