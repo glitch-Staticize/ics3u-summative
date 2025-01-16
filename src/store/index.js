@@ -5,15 +5,6 @@ export const useStore = defineStore('store', () => {
   const cart = ref(new Map());
   const currentUserEmail = ref('');
   const accounts = ref(new Map());
-  const user = ref(null);
-
-  const toggleCart = (movie) => {
-    if (cart.value.has(movie.id)) {
-      cart.value.delete(movie.id);
-    } else {
-      cart.value.set(movie.id, movie);
-    }
-  };
 
   const setRegistrationData = (data) => {
     const userAccount = {
@@ -40,7 +31,5 @@ export const useStore = defineStore('store', () => {
     addToCart,
     removeFromCart,
     setRegistrationData,
-    user,
-    toggleCart,
   }; 
 });

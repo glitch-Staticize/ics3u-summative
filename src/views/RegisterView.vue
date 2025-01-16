@@ -1,25 +1,36 @@
 <script setup>
+import { useStore } from "../store"
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+import Footer from '../components/Footer.vue'
+
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
-import { useRouter } from 'vue-router';
-import { useStore } from "../store"
+
+const router = useRouter();
+const store = useStore();
+
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const router = useRouter();
-const store = useStore();
 
-async function registerByEmail() {  
-  try {
-    const user = (await createUserWithEmailAndPassword(auth, email.value, password.value)).user;
-    await updateProfile(user, { displayName: `${firstName.value} ${lastName.value}` });
-    store.user = user;
-    router.push("/movies");
-  } catch (error) {
-    alert("There was an error creating a user with email!");
+
+const validateForm = (event) => {
+  event.preventDefault();
+  if (password.value !== confirmPassword.value) {
+    alert('The passwords do not match. Please check and try again.');
+  } else {
+    store.setRegistrationData({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+    });
+    store.currentUserEmail = email.value
+    router.push('/movies')
   }
 }
 async function registerByGoogle() {
@@ -30,161 +41,99 @@ async function registerByGoogle() {
   } catch (error) {
     alert("There was an error creating a user with Google!");
   }
-}</script>
+}
+</script>
 
 <template>
-  <div class="hero">
-    <div class="overlay">
-      <div class="navbar">
-        <RouterLink to="/"><img id="logo" src="../images/Relicx Pure Logo (1).png" alt="Relicx Logo"></RouterLink>
-        <a href="login" class="button login">Login</a>
-      </div>
-      <div class="form-container">
-        <h2>Create an Account</h2>
-        <form @submit.prevent="registerByEmail()">
-          <input v-model="firstName" type="text" placeholder="First Name" class="input-field" required>
-          <input v-model="lastName" type="text" placeholder="Last Name" class="input-field" required>
-          <input v-model="email" type="text" placeholder="Email" class="input-field" required>
-          <input v-model="password" type="password" placeholder="Password" class="input-field" required>
-          <input v-model="confirmPassword" type="password" placeholder="Confirm Password" class="input-field" required>
-          <button type="submit" class="button register">Register</button>
-        </form>
-      </div>
-      <button @click="registerByGoogle()" class="button register">Register by Google</button>
+  <Header />
+  <div class="form-container">
+    <h2>Create an Account</h2>
+    <form @submit="validateForm">
+      <input type="text" placeholder="First Name" class="input-field" v-model="firstName" required />
+      <input type="text" placeholder="Last Name" class="input-field" v-model="lastName" required />
+      <input type="email" placeholder="Email" class="input-field" v-model="email" required />
+      <input type="password" placeholder="Password" class="input-field" v-model="password" required />
+      <input type="password" placeholder="Confrim Password" class="input-field" v-model="confirmPassword" required />
+      <button type="submit" class="register">Register</button>
+    </form>
+    <div>
+      <button @click="registerByGoogle()" class="register">Register by Google</button>
     </div>
   </div>
+  <Footer />
 </template>
 
 <style scoped>
-.hero {
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  color: white;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: black;
 }
 
-.overlay {
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 100%;
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 30px;
-}
-
-.navbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-}
-
-#logo {
-  width: 150px; 
-  transition: transform 0.3s ease;
-}
-
-#logo:hover {
-  transform: scale(1.1); 
-}
-
-.navbar .login {
-  background-color: #24b14a;
+  padding: 40px 20px;
+  background-color: #6f7e69;
+  min-height: 100vh;
   color: white;
-  padding: 12px 24px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s ease;
-}
-
-.navbar .login:hover {
-  background-color: #4da726;
-  transform: scale(1.05);
-}
-
-.form-container {
-  text-align: center;
-  margin-top: 40px;
-  width: 100%;
-  max-width: 400px;
 }
 
 .form-container h2 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: #ffffff;
-  font-family: 'Arial', sans-serif;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: white;
 }
 
 .input-field {
-  padding: 16px;
   width: 100%;
-  max-width: 350px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-  font-size: 1rem;
-  background-color: #f4f4f4;
-  transition: border-color 0.3s, box-shadow 0.3s ease;
+  max-width: 400px;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 2px solid #24b14a;
+  border-radius: 5px;
+  font-size: 16px;
+  color: black;
 }
 
 .input-field:focus {
-  border-color: #24b14a; 
-  box-shadow: 0 0 8px rgba(36, 177, 74, 0.8); 
+  border-color: #3d7b22;
   outline: none;
 }
 
 .register {
-  background-color: #24b14a; 
-  color: white;
-  padding: 14px 28px;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 15px;
+  margin-top: 10px;
   border: none;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
+  border-radius: 5px;
+  background-color: #24b14a;
+  color: white;
+  font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s, transform 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
 }
 
 .register:hover {
-  background-color: #4da726; 
-  transform: scale(1.05);
+  background-color: #3d7b22;
+}
+
+.register:active {
+  background-color: black;
+  color: white;
+  transform: scale(0.98);
 }
 
 @media (max-width: 768px) {
-  .input-field {
-    width: 90%;
-  }
 
-  .navbar h1 {
-    font-size: 1.5rem;
-  }
-
-  #logo {
-    width: 120px;
-  }
-}
-
-@media (max-width: 600px) {
-  .form-container h2 {
-    font-size: 2rem;
-  }
-
-  .navbar {
-    padding: 15px;
-  }
-
-  .navbar .login {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+  .input-field,
+  .register {
+    font-size: 14px;
   }
 }
 </style>
