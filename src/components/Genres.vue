@@ -30,7 +30,9 @@ onMounted(async () => {
       <div v-for="movie in response.data.results" :key="movie.id" class="movie-card" @click="getMovieDetails(movie.id)">
         <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Movie Poster" class="movie-poster" />
         <p class="movie-title">{{ movie.title }}</p>
-        
+        <button @click.stop="store.toggleCart(movie)">
+          {{ store.cart.has(movie.id) ? "Added" : "Buy" }}
+        </button>
       </div>
     </div>
   </div>
