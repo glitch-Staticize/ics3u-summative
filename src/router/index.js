@@ -15,16 +15,9 @@ const routes = [
     { path: '/login', meta: { auth: false }, component: LoginView },
     { path: '/cart', meta: { auth: true }, component: CartView },
     { path: '/settings', meta: { auth: true }, component: SettingsView },
-    {
-        path: '/movies',
-        component: MoviesView,
-        meta: { auth: true },
-        children: [
-            { path: 'movies', component: MoviesView },
-            { path: ':id', component: DetailView },
-        ]
-    },
-    { path: '/:pathMatch(.*)*', meta: { auth: false }, component: ErrorView, },
+    { path: '/movies', meta: { auth: true }, component: MoviesView },
+    { path: '/movies/:id', meta: { auth: true }, component: DetailView },
+    { path: '/error', meta: { auth: false }, component: ErrorView },
 ]
 
 
