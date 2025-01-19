@@ -2,7 +2,7 @@
 
 <template>
     <div class="footer">
-        <p>Jayvan Lin | Assignment 5 Movie Website</p>
+        <p>Relicx | ics3u-summative assignment | Jayvan Lin</p>
     </div>
 </template>
 

@@ -1,58 +1,48 @@
 <script setup>
-import Cart from "../components/Cart.vue";
+import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 import { useStore } from '../store';
-import { ref, computed, onMounted } from 'vue';
+import { auth } from "../firebase";
+import { updateProfile } from "firebase/auth";
+import { ref, onMounted } from 'vue';
 
 const store = useStore();
-
-const currentUserDetails = computed(() => {
-  return store.accounts.get(store.currentUserEmail) || {};
-});
 
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 
+let user = auth.currentUser;
+
 onMounted(() => {
-  const user = currentUserDetails.value;
-  firstName.value = user.firstName || '';
-  lastName.value = user.lastName || '';
-  email.value = store.currentUserEmail || '';
+  const fullName = store.user.displayName.split(" ")
+  firstName.value = fullName[0] || '';
+  lastName.value = fullName[1] || '';
+  email.value = store.user.email || '';
 });
 
 function saveChanges() {
-  const userAccount = store.accounts.get(store.currentUserEmail);
-
-  if (userAccount) {
-    userAccount.firstName = firstName.value;
-    userAccount.lastName = lastName.value;
-
-    store.accounts.set(store.currentUserEmail, userAccount);
-
-    alert('Changes saved');
-  } else {
-    alert('User not found');
-  }
+  updateProfile(user, { displayName: `${firstName.value} ${lastName.value}` });
+  alert('Changes saved');
 }
 </script>
 
 <template>
-  <Cart />
+  <Header />
   <div class="layout">
     <div class="settings-container">
       <div class="settings-input">
-        <h2>Settings</h2>
+        <h1>Settings</h1>
         <div>
-          <h4>First Name</h4>
+          <h2>First Name</h2>
           <input v-model="firstName" type="text" class="input-field" required />
         </div>
         <div>
-          <h4>Last Name</h4>
+          <h2>Last Name</h2>
           <input v-model="lastName" type="text" placeholder="Last Name" class="input-field" required />
         </div>
         <div>
-          <h4>Email</h4>
+          <h2>Email</h2>
           <input v-model="email" type="email" placeholder="Email" class="input-field" disabled />
         </div>
         <button class="btn btn-primary" @click="saveChanges">Save Changes</button>

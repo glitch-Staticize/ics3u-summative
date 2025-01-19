@@ -1,11 +1,11 @@
 <script setup>
-import Cart from "../components/Cart.vue";
+import Header from '@/components/Header.vue';
 import Details from '../components/Details.vue';
 import Footer from '../components/Footer.vue';
 </script>
 
 <template>
-  <Cart />
+  <Header />
   <Details />
   <Footer />
 </template>

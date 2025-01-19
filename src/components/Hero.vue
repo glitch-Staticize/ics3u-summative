@@ -1,4 +1,5 @@
 <script setup></script>
+
 <template>
     <div class="hero">
         <div class="overlay">

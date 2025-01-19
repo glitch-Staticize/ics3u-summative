@@ -1,5 +1,14 @@
-<script setup></script>
-<template>
+<script setup>
+</script>
 
+<template>
+  <h1>This page does not exist</h1>
 </template>
-<style scoped></style>
+
+<style scope>
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #38c472;
+}
+</style>

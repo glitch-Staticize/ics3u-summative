@@ -2,7 +2,7 @@
 import axios from "axios";
 import { ref, onMounted } from 'vue';
 
-const response = ref(null);
+const response = ref();
 
 function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);

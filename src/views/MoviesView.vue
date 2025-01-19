@@ -1,12 +1,7 @@
 <script setup>
-import Cart from "../components/Cart.vue";
-import Footer from '../components/Footer.vue';
+import Header from '@/components/Header.vue';
 import Genres from "../components/Genres.vue";
-import { useRouter, RouterView } from 'vue-router';
-import { useStore } from '../store';
-
-const store = useStore();
-const router = useRouter();
+import Footer from '../components/Footer.vue';
 
 const genresList = [
   {
@@ -33,13 +28,7 @@ const genresList = [
 </script>
 
 <template>
-  <div class="movie-gallery">
-
-    <main class="movie-container">
-      <RouterView />
-    </main>
-  </div>
-  <Cart/>
+  <Header />
   <Genres :genres="genresList" />
   <Footer />
 </template>

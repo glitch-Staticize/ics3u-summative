@@ -4,51 +4,28 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
 export const useStore = defineStore('store', () => {
+  const user = ref(null);
   const cart = ref(new Map());
-  const currentUserEmail = ref('');
-  const accounts = ref(new Map());
 
-  const setRegistrationData = (data) => {
-    const userAccount = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-    };
-    accounts.value.set(data.email, userAccount);
-  };
-
-  function addToCart(id, movieData) {
-    cart.value.set(id, movieData);
-  }
-
-  function removeFromCart(id) {
-    cart.value.delete(id);
-  }
-
-  
-  return {
-    cart,
-    currentUserEmail,
-    accounts,
-    addToCart,
-    removeFromCart,
-    setRegistrationData,
-    user,
-  }; 
+  return { cart, user };
 });
 
 export const userAuthorized = new Promise((resolve, reject) => {
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, (user) => {
     try {
       const store = useStore();
-      store.user = user;
-      const storedCart = localStorage.getItem(`cart_${store.user.email}`);
 
-      store.cart = storedCart ? new Map(Object.entries(JSON.parse(storedCart))) : new Map();
-      resolve();
+      if (user) {
+        store.user = user;
+        const storedCart = localStorage.getItem(`cart_${store.user.email}`);
+        store.cart = storedCart ? new Map(Object.entries(JSON.parse(storedCart))) : new Map();
+        resolve();
+      } else {
+        resolve();
+      }
     } catch (error) {
-      reject();
+      reject(error);
     }
-  })
-})
+  });
+});
+  

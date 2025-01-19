@@ -6,7 +6,6 @@ const route = useRoute();
 const response = await axios.get(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=${import.meta.env.VITE_TMDB_KEY}&append_to_response=videos`);
 </script>
 
-
 <template>
   <div class="movie-detail">
     <h1 class="movie-title">{{ response.data.original_title }}</h1>
@@ -29,15 +28,11 @@ const response = await axios.get(`https://api.themoviedb.org/3/movie/${route.par
 
 <style scoped>
 .movie-detail {
-  margin-top: 0px;
+  margin-top: 80px;
   padding: 20px;
   color: white;
   background-color: black;
   font-family: Arial, sans-serif;
-}
-
-.movie-detail h1 {
-  margin-top: 60px;
 }
 
 .movie-title {
