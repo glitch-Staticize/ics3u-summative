@@ -40,28 +40,23 @@ body {
   color: black;
 }
 
-/* Movie Gallery */
 .movie-gallery {
   display: flex;
   flex-direction: column;
 }
 
-/* Main Movie Container */
 .movie-container {
   flex-grow: 1;
 }
 
-/* Footer */
 footer {
   background-color: #3d7b22;
-  /* Dark Green */
   color: white;
   text-align: center;
   padding: 20px;
   font-size: 14px;
 }
 
-/* Genres Section */
 .genres {
   display: flex;
   justify-content: space-between;
@@ -72,7 +67,6 @@ footer {
 
 .genre {
   background-color: #24b14a;
-  /* Green background */
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -83,6 +77,5 @@ footer {
 
 .genre:hover {
   background-color: #3d7b22;
-  /* Dark Green on hover */
 }
 </style>

@@ -65,7 +65,6 @@ async function registerByGoogle() {
 </template>
 
 <style scoped>
-/* General Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -92,7 +91,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -119,7 +117,6 @@ body {
   background-color: #3d7b22;
 }
 
-/* Form Container */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -168,7 +165,6 @@ body {
   transform: scale(0.98);
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .overlay {
     padding: 15px;

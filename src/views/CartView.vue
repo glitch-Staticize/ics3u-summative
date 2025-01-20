@@ -19,7 +19,7 @@ function checkout() {
         `cart_${store.user.email}`,
         JSON.stringify(Object.fromEntries(store.cart))
     )
-    alert("Purchase Successful!")
+    alert("Thank you for your purchase!")
 }
 </script>
 

@@ -56,7 +56,6 @@ const logout = () => {
     font-family: Arial, sans-serif;
 }
 
-/* Logo */
 #logo {
     height: 50px;
     cursor: pointer;
@@ -68,7 +67,6 @@ const logout = () => {
     transform: scale(1.1);
 }
 
-/* Navigation Links */
 .navbar .right {
     color: white;
     font-weight: bold;
@@ -85,14 +83,12 @@ const logout = () => {
     transform: scale(1.1);
 }
 
-/* Active States */
 .navbar .right:active {
     background-color: black;
     color: white;
     transform: scale(0.98);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         padding: 15px;

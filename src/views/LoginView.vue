@@ -58,7 +58,6 @@ const loginByGoogle = async () => {
 </template>
 
 <style scoped>
-/* General Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -89,7 +88,6 @@ body {
   align-items: center;
 }
 
-/* Form Container */
 .form-container {
   width: 100%;
 }
@@ -119,7 +117,6 @@ body {
   outline: none;
 }
 
-/* Buttons */
 .button {
   display: block;
   width: 100%;
@@ -146,7 +143,6 @@ body {
   transform: scale(0.98);
 }
 
-/* Responsive Styles */
 @media (max-width: 600px) {
   .overlay {
     padding: 20px;
